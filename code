@@ -1,0 +1,168 @@
+   using System;
+
+public interface IMovies
+{
+    string getMovies();
+}
+
+public class Movies : IMovies
+{
+    public string getMovies()
+    {
+        Console.WriteLine("Select a movie/tv show: ");
+        Console.WriteLine("1 - Mr and Mrs Smith \n2 - Riverdale \n3 - Sacred Games \n4 - Wednesday\n5 - Badlapur");
+
+        int user = Convert.ToInt32(Console.ReadLine());
+        if (user == 1) return "Mr and Mrs Smith";
+        else if (user == 2) return "Riverdale";
+        else if (user == 3) return "Sacred Games";
+        else if (user == 4) return "Wednesday";
+        else if (user == 5) return "Badlapur";
+        else return "No such movie/tv show";
+    }
+}
+
+public class Client
+{
+    private IMovies mov;
+    public Client(IMovies movie)
+    {
+        this.mov = movie;
+    }
+
+    public string supclient()
+    {
+        return this.mov.getMovies();
+    }
+}
+
+public interface IDownload
+{
+    void getDownload(IMovies m);
+}
+
+public class Download : IDownload
+{
+    public void getDownload(IMovies m)
+    {
+        string query = m.getMovies();
+        Console.WriteLine(query + " is downloading.");
+        Console.WriteLine(query + " downloaded");
+    }
+}
+
+public interface IReview
+{
+    void review(IMovies m);
+}
+
+public class ReviewAndComments : IReview
+{
+    public void review(IMovies m)
+    {
+        string query = m.getMovies();
+
+        Console.WriteLine("What are your thoughts on " + query);
+        Console.WriteLine("Write a review");
+        string rev = Console.ReadLine();
+        Console.WriteLine("Provide Rating out of 10");
+        int rat = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("your review and rating for " + query + " movie/tvshow is ");
+        Console.WriteLine("Review: " + rev);
+        Console.WriteLine("Rating: " + rat);
+    }
+}
+
+public interface IUser
+{
+    void signup();
+    bool login();
+}
+
+public class User : IUser
+{
+    public string name, email, pwd;
+    int age;
+    public void signup()
+    {
+        Console.WriteLine("Enter your Name: ");
+        name = Console.ReadLine();
+        Console.WriteLine("Enter your age: ");
+        age = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Enter Email: ");
+        email = Console.ReadLine();
+        Console.WriteLine("Enter Password: ");
+        pwd = Console.ReadLine();
+    }
+    public bool login()
+    {
+        Console.WriteLine("Login");
+        Console.WriteLine("Enter Email: ");
+        email = Console.ReadLine();
+        Console.WriteLine("Enter Password: ");
+        string pwde = Console.ReadLine();
+        if (pwd == pwde) return true;
+        return false;
+    }
+}
+
+public interface ISecurity
+{
+    void policy();
+}
+
+public class Security : ISecurity
+{
+    public void policy()
+    {
+        Console.WriteLine("Policies: \n");
+
+        Console.WriteLine("1.Allowed members to add a sub-account for people living outside their household for a small fee. \n");
+        Console.WriteLine("2.Netflix wouldn’t charge users for sharing their passwords. \n");
+        Console.WriteLine("3.Allowed users who share an account to transfer their profile information to a new account or sub-account. \n");
+        Console.WriteLine("4.The platform will be able to detect if a device that is not associated with your Netflix household. \n");
+        Console.WriteLine("5.Netflix plans to end password sharing with anyone outside household starting April 2023. \n");
+        Console.WriteLine("6.Netflix has confirmed that it will roll out the paid sharing feature in many more countries.\n");
+    }
+}
+
+public class Test
+{
+    public static void Main()
+    {
+        User u = new User();
+        u.signup();
+        if (u.login())
+        {
+            Movies m = new Movies();
+            Client c = new Client(m);
+            while (true)
+            {
+                Console.WriteLine("What would you like to do?\n1- View List of movies\n2- Download a movie\n3- Review a Movie\n4- Terms And Conditions * - Exit");
+                string num = Console.ReadLine();
+                if (num == "1")
+                {
+                    Console.WriteLine("\n\nEnter any key from 1-5 to go back to main menu.");
+                    c.supclient();
+                }
+                else if (num == "2")
+                {
+                    Download d = new Download();
+                    d.getDownload(m);
+                }
+                else if (num == "3")
+                {
+                    ReviewAndComments rc = new ReviewAndComments();
+                    rc.review(m);
+                }
+                else if (num == "4")
+                {
+                    Security sc = new Security();
+                    sc.policy();
+                }
+                else break;
+            }
+        }
+    }
+}
