@@ -21,17 +21,17 @@ Setup
 Clone the repository:
 
 bash
-Copy code
+.
 git clone https://github.com/your-username/event-finder-api.git
 Install dependencies:
 
 bash
-Copy code
+.
 pip install -r requirements.txt
 Run the Flask application:
 
 bash
-Copy code
+.
 python app.py
 The API server will start running at http://localhost:5000.
 
